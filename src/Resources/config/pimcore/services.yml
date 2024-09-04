@@ -1,0 +1,4 @@
+services:
+    DCO\DataTools\Command\:
+        resource: '../../../Command'
+        tags: ['console.command']

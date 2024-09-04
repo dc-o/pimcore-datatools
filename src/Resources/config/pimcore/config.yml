@@ -1,0 +1,6 @@
+imports:
+    - { resource: ./services.yml }
+
+pimcore:
+    models:
+        class_overrides:
