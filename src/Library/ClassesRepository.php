@@ -46,9 +46,13 @@ class ClassesRepository {
         $config = ClassDefinition::getByName($className);
         if (file_exists($filename)) {
             // check if there were any changes
-            $existingConfig = self::loadClass($filename);
-            if (self::compareClassDefinitions($config, $existingConfig))
-                return;
+            try {
+                $existingConfig = self::loadClass($filename);
+                if (self::compareClassDefinitions($config, $existingConfig))
+                    return;
+            } catch (\Exception) {
+                // configuration is not loadable or empty, recreate
+            }
         }
         file_put_contents($filename, json_encode($config, JSON_PRETTY_PRINT));
     }
