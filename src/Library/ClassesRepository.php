@@ -6,11 +6,17 @@ use Pimcore\Model\DataObject\ClassDefinition;
 class ClassesRepository {
     /**
      * returns a list of all already installed classes in pimcore
+     * @param $filter string|null Filter for specific classes starting with $filter
+     * @param $skipFilter bool Skip exact match of filter
      * @return string[]
      * @throws \Doctrine\DBAL\Exception
      */
-    public static function getInstalledClasses() : array {
-        return \Pimcore\Db::get()->executeQuery('SELECT `name` FROM `classes`')->fetchFirstColumn();
+    public static function getInstalledClasses(string $filter = null, bool $skipFilter = true) : array {
+        $classes = \Pimcore\Db::get()->executeQuery('SELECT `name` FROM `classes`')->fetchFirstColumn();
+        if (!empty($filter)) {
+            return array_filter($classes, function ($v) use ($filter, $skipFilter) { if (strtolower($v) == strtolower($filter) && $skipFilter) return false; return stripos($v, $filter) === 0;  });
+        }
+        return $classes;
     }
 
     public static function getInstalledClassIds() : array {
