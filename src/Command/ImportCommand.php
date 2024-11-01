@@ -16,6 +16,7 @@ class ImportCommand extends AbstractCommand {
     protected function execute(InputInterface $input, OutputInterface $output) : ?int
     {
         (new ImportQuantityValuesCommand())->execute($input, $output);
+        (new ImportFieldCollectionsCommand())->execute($input, $output);
         (new ImportClassesCommand())->execute($input, $output);
         return 0;
     }

@@ -16,6 +16,7 @@ class ExportCommand extends AbstractCommand {
     protected function execute(InputInterface $input, OutputInterface $output) : ?int
     {
         (new ExportQuantityValuesCommand())->execute($input, $output);
+        (new ExportFieldCollectionsCommand())->execute($input, $output);
         (new ExportClassesCommand())->execute($input, $output);
         return 0;
     }
